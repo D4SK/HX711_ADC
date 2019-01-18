@@ -160,7 +160,7 @@ float HX711_ADC::getData() // return fresh data from the moving average data set
 	long k = 0;
 	long data = 0;
 	data = smoothedData() - tareOffset;
-	data = (data >> divBit);
+	data = (data >> divBit);             // divides by powers of 2 (by shifting every bit to the right) to get average
 	float x = (float)data / calFactor;
 	return x;
 }
