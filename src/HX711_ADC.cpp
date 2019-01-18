@@ -144,6 +144,17 @@ uint8_t HX711_ADC::update()
 	return convRslt;
 }
 
+
+float HX711_ADC::getRawData()
+{
+	long data = 0;
+	data = convRslt - tareOffset;
+	data = (data >> divBit);
+	float x = (float)data / calFactor;
+	return x;
+
+}
+
 float HX711_ADC::getData() // return fresh data from the moving average data set
 {
 	long k = 0;

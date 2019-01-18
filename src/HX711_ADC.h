@@ -12,9 +12,7 @@
 #include <Arduino.h>
 #include "config.h"
 
-/*
-Note: HX711_ADC configuration values has been moved to file config.h
-*/
+
 
 #define DATA_SET 	SAMPLES + IGN_HIGH_SAMPLE + IGN_HIGH_SAMPLE // total samples in memory
 
@@ -40,16 +38,17 @@ class HX711_ADC
 {	
 		
 	public:
-		HX711_ADC(uint8_t dout, uint8_t sck); 	//constructor
+		HX711_ADC(uint8_t dout, uint8_t sck); 	    //constructor
 		void setGain(uint8_t gain = 128); 			//value should be 32, 64 or 128*
 		void begin();
 		void begin(uint8_t gain);
-		int start(unsigned int t); 				// start and tare one HX711
+		int start(unsigned int t); 				    // start and tare one HX711
 		int startMultiple(unsigned int t); 			//start and tare multiple HX711 simultaniously
 		void tare(); 								// zero the scale, wait for tare to finnish
 		void tareNoDelay(); 						// zero the scale, do tare in loop without waiting for tare to finnish
 		void setCalFactor(float cal); 				//calibration factor, raw data is divided by this value to convert to readable data
-		float getCalFactor(); 						// returns the current calibration factor
+		float getCalFactor();                       // returns the current calibration factor
+		float getRawData(); 					// Returns current Reading without filtering	
 		float getData(); 							// returns data from the moving average data set 
 		float getSingleConversion(); 				//for testing and debugging
 		long getSingleConversionRaw(); 				//for testing and debugging
@@ -73,7 +72,7 @@ class HX711_ADC
 		uint8_t doutPin; 							//HX711 dout pin
 		uint8_t GAIN;
 		float calFactor;
-		volatile long dataSampleSet[DATA_SET + 1]; 			// data set, make voltile if interrupt is used 
+		volatile long dataSampleSet[DATA_SET + 1];  // data set, make voltile if interrupt is used 
 		long tareOffset;
 		int readIndex = 0;
 		unsigned long conversionStartTime;
